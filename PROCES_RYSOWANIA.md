@@ -196,6 +196,14 @@ end;
 - `WriteLine(X, Y, W, H: Integer; var Buf)` - Pisanie linii z bufora
 - `WriteStr(X, Y: Integer; Str: String; Color: Byte)` - Pisanie stringa
 
+**Różnice między `WriteBuf` a `WriteLine`**:
+
+`WriteBuf` kopiuje prostokątny blok danych z bufora, przesuwając wskaźnik `Buf` o `2*W` bajtów po każdym wierszu. Pozwala to na przeniesienie obszaru o dowolnej zawartości.
+
+`WriteLine` przy każdym obrocie pętli korzysta z tego samego wskaźnika `Buf`, jedynie zwiększając współrzędną `Y` i zmniejszając `H`. W rezultacie ta sama linia zostaje powielona w kolejnych wierszach.
+
+W efekcie `WriteBuf` służy do kopiowania obszaru z różnymi wierszami, natomiast `WriteLine` wypełnia obszar powtarzając ten sam wiersz.
+
 **Proces WriteView** (implementowany w assemblerze):
 1. Sprawdzenie granic widoku
 2. Obliczenie współrzędnych globalnych
